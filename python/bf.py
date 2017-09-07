@@ -42,7 +42,7 @@ class UByte(Mixin, ctypes.c_ubyte):
 
 Int = lambda x: x
 
-TYPE = Byte
+TYPE = Int
 
 
 class Machine:
