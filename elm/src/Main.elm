@@ -158,21 +158,21 @@ parse tokens =
       case List.head tokens of
         Just (TLoopToken LoopStart) ->
           let
-            (is, ts) = parse tail
-            (iss, tss) = parse ts
-            isss = Loop is :: iss
+            (i1, t1) = parse tail
+            (i2, t2) = parse t1
+            i3 = Loop i1 :: i2
           in
-            (isss, tss)
+            (i3, t2)
 
         Just (TLoopToken LoopEnd) ->
           ([], tail)
 
         Just (TDoToken token) ->
           let
-            (is, ts) = parse tail
-            iss = Do token :: is
+            (i1, t1) = parse tail
+            i2 = Do token :: i1
           in
-            (iss, ts)
+            (i2, t1)
 
         Nothing ->
           ([], [])
