@@ -47,15 +47,15 @@ proc tokenize(data: string): seq[Token] =
   var tokens: seq[Token]
   for c in data:
     case c:
-      of '>': tokens.add(IncrementHead)
-      of '<': tokens.add(DecrementHead)
-      of '+': tokens.add(IncrementCell)
-      of '-': tokens.add(DecrementCell)
-      of '.': tokens.add(Print)
-      of ',': tokens.add(Read)
-      of '[': tokens.add(LoopStart)
-      of ']': tokens.add(LoopEnd)
-      else:   continue
+    of '>': tokens.add(IncrementHead)
+    of '<': tokens.add(DecrementHead)
+    of '+': tokens.add(IncrementCell)
+    of '-': tokens.add(DecrementCell)
+    of '.': tokens.add(Print)
+    of ',': tokens.add(Read)
+    of '[': tokens.add(LoopStart)
+    of ']': tokens.add(LoopEnd)
+    else:   continue
   return tokens
 
 proc parse(tokens: seq[Token], index: int): (seq[Command], int) =
@@ -63,34 +63,34 @@ proc parse(tokens: seq[Token], index: int): (seq[Command], int) =
   var index = index
   while index < tokens.len:
     case tokens[index]:
-      of LoopStart:
-        let res = parse(tokens, index+1)
-        index = res[1]
-        let loop = Command(kind: Loop, cs: res[0])
-        commands.add(loop)
-      of LoopEnd:
-        return (commands, index)
-      else:
-        let command = Command(kind: Do, tk: tokens[index])
-        commands.add(command)
+    of LoopStart:
+      let res = parse(tokens, index+1)
+      index = res[1]
+      let loop = Command(kind: Loop, cs: res[0])
+      commands.add(loop)
+    of LoopEnd:
+      return (commands, index)
+    else:
+      let command = Command(kind: Do, tk: tokens[index])
+      commands.add(command)
     index.inc
   return (commands, index)
 
 proc run(program: seq[Command], tape: Tape) =
   for command in program:
     case command.kind:
-      of Do:
-        case command.tk:
-          of IncrementHead: tape.incrementHead()
-          of DecrementHead: tape.decrementHead()
-          of IncrementCell: tape.incrementCell()
-          of DecrementCell: tape.decrementCell()
-          of Print:         tape.print()
-          of Read:          tape.read()
-          else:             discard
-      of Loop:
-        while tape.getData() != 0:
-          run(command.cs, tape)
+    of Do:
+      case command.tk:
+      of IncrementHead: tape.incrementHead()
+      of DecrementHead: tape.decrementHead()
+      of IncrementCell: tape.incrementCell()
+      of DecrementCell: tape.decrementCell()
+      of Print:         tape.print()
+      of Read:          tape.read()
+      else:             discard
+    of Loop:
+      while tape.getData() != 0:
+        run(command.cs, tape)
 
 when isMainModule:
   let brainfuck = paramStr(1).readFile()
