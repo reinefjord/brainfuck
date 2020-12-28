@@ -55,7 +55,7 @@ proc tokenize(data: string): seq[Token] =
     of ',': tokens.add(Read)
     of '[': tokens.add(LoopStart)
     of ']': tokens.add(LoopEnd)
-    else:   continue
+    else:   discard
   return tokens
 
 proc parse(tokens: seq[Token], index: int): (seq[Command], int) =
