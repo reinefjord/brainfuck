@@ -22,16 +22,16 @@ type
       cs: seq[Command]
 
 proc incrementHead(t: Tape) =
-  t.head = t.head + 1
+  t.head.inc
 
 proc decrementHead(t: Tape) =
-  t.head = t.head - 1
+  t.head.dec
 
 proc incrementCell(t: Tape) =
-  t.cells[t.head] = t.cells[t.head] + 1
+  t.cells[t.head].inc
 
 proc decrementCell(t: Tape) =
-  t.cells[t.head] = t.cells[t.head] - 1
+  t.cells[t.head].dec
 
 proc print(t: Tape) =
   stdout.write(chr(t.cells[t.head]))
